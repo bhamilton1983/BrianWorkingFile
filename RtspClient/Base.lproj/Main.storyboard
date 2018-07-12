@@ -385,19 +385,6 @@
                                     <action selector="playAction:" destination="jQn-VN-SxB" eventType="touchUpInside" id="fLM-S8-rAq"/>
                                 </connections>
                             </button>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="f3v-PM-vI4">
-                                <rect key="frame" x="92" y="321" width="121" height="29"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <segments>
-                                    <segment title="Show"/>
-                                    <segment title="Hide"/>
-                                </segments>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <connections>
-                                    <action selector="hideControlChange:" destination="jQn-VN-SxB" eventType="valueChanged" id="6vj-ph-D52"/>
-                                </connections>
-                            </segmentedControl>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="image classification" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iib-G6-aU1">
                                 <rect key="frame" x="584" y="346" width="202" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -461,7 +448,6 @@
                         <outlet property="classificationButton" destination="2Uh-DN-qQx" id="GWf-1d-yCY"/>
                         <outlet property="classificationLabel" destination="Iib-G6-aU1" id="3Xo-u5-rXM"/>
                         <outlet property="controlScroll" destination="pER-1B-Flr" id="h8j-IS-sEV"/>
-                        <outlet property="hideControlViews" destination="f3v-PM-vI4" id="78u-3a-Mbx"/>
                         <outlet property="playPause" destination="7F5-Pa-VOX" id="XfW-1k-rMY"/>
                         <outlet property="savePhoto" destination="dOe-Sh-viV" id="qdi-WA-97D"/>
                         <outlet property="sideControlContainer" destination="tG4-Me-82O" id="xGh-2R-jMP"/>
@@ -470,7 +456,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kpd-tw-ehw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2191" y="-5581"/>
+            <point key="canvasLocation" x="2126" y="-5802"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Qqx-5L-BEE">

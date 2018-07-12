@@ -19,12 +19,11 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
     
     @IBOutlet weak var cameraScroll: UIScrollView!
     @IBOutlet weak var controlScroll: UIScrollView!
-    
+    var tapToggle = 0
     var identity = CGAffineTransform.identity
     var imagePicker: UIImagePickerController!
-    @IBOutlet weak var hideControlViews: UISegmentedControl!
-    let recorder = RPScreenRecorder.shared()
-    private var isRecording = false
+  
+    
    
 
     @IBOutlet var HDimageView: UIImageView!
@@ -71,23 +70,7 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
     
  
  
-    @IBAction func hideControlChange(_ sender: Any) {
-        
-        switch hideControlViews.selectedSegmentIndex
-        {
-        case 0:
-        
-            zoomControlContainer.isHidden = true
-            sideControlContainer.isHidden = true
-       
-        case 1:
-        
-            zoomControlContainer.isHidden = false
-            sideControlContainer.isHidden = false
-        default:
-            break
-    }
-    }
+
  
     @IBOutlet weak var savePhoto: UIButton!
     
@@ -106,7 +89,10 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         //set up scroll layer
-     
+        let tap = UITapGestureRecognizer(target: self, action: #selector(doubleTapped))
+        tap.numberOfTapsRequired = 2
+        let longPressRecognizer = UILongPressGestureRecognizer(target: self, action: #selector(longPressed))
+        
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(scale))
        let rotationGesture = UIRotationGestureRecognizer(target: self, action: #selector(rotate))
         let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(handlePan))
@@ -119,13 +105,16 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
        gestureRecognizer.delegate = self
        pinchGesture.delegate = self
        rotationGesture.delegate = self
+        
        controlScroll.minimumZoomScale = 0.5
        controlScroll.maximumZoomScale = 10.0
        controlScroll.zoomScale = 1.0
        cameraScroll.minimumZoomScale = 0.5
        cameraScroll.maximumZoomScale = 10.0
        cameraScroll.zoomScale = 1.0
+       cameraScroll.addGestureRecognizer(tap)
        cameraScroll.addGestureRecognizer(pinchGesture)
+       cameraScroll.addGestureRecognizer(longPressRecognizer)
        cameraScroll.addGestureRecognizer(rotationGesture)
        cameraScroll.addGestureRecognizer(gestureRecognizer)
        cameraScroll.addSubview(HDimageView)
@@ -139,7 +128,47 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
        controlScroll.layer.borderColor = UIColor.black.cgColor
 //
     }
+    @objc func doubleTapped() {
+        // do something here
+        
+        
+        if tapToggle == 0
+        {
+            tapToggle = 1
+            zoomControlContainer.isHidden = true
+            sideControlContainer.isHidden = true
+            classificationLabel.isHidden = true
+            controlScroll.layer.borderColor =   UIColor.clear.cgColor
+            playPause.isHidden = true
+            savePhoto.isHidden = true
+            classificationButton.isHidden = true
+        }   else  {
+            if tapToggle == 1
+                
+            {
+                zoomControlContainer.isHidden = false
+                sideControlContainer.isHidden = false
+                classificationLabel.isHidden = false
+                controlScroll.layer.borderColor =   UIColor.black.cgColor
+                playPause.isHidden = false
+                savePhoto.isHidden = false
+                classificationButton.isHidden = false
+                tapToggle = 0
+                
+            }
+        }
+    }
     
+    @objc func longPressed(sender: UILongPressGestureRecognizer)
+    {
+        let imageRepresentation = HDimageView.image!.pngData()
+        let imageData = UIImage(data: imageRepresentation!)
+        UIImageWriteToSavedPhotosAlbum(imageData!, nil, nil, nil)
+        let alert = UIAlertController(title: "Completed", message: "Image has been saved!", preferredStyle: .alert)
+        let action = UIAlertAction(title: "Ok", style: .default, handler: nil)
+        alert.addAction(action)
+        self.present(alert, animated: true, completion: nil)
+    }
     //save photo to camera roll
     @IBAction func savePhotoTapped(_ sender: Any) {
        
