@@ -6,7 +6,11 @@ import Vision
 import QuartzCore
 
 class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIGestureRecognizerDelegate, UIScrollViewDelegate {
-   
+  
+    
+    
+    
+    static var rectMade:CGRect = CGRect(x:PhotoController.xPoint, y: PhotoController.yPoint, width: PhotoController.rectWidth, height: PhotoController.rectHeight)
     @IBOutlet weak var scrollMaster: UIScrollView!
     var identity = CGAffineTransform.identity
     let overlay = UIView()
@@ -18,11 +22,9 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
     @IBOutlet weak var scrollViewTwo: UIScrollView!
     
     @IBOutlet weak var secondImage: UIImageView!
-    static var rectMade:CGRect = CGRect(x:PhotoController.xPoint, y: PhotoController.yPoint, width: PhotoController.rectWidth, height: PhotoController.rectHeight)
+
     @IBOutlet weak var savePhotoFilter: UIButton!
-   
     @IBOutlet weak var findFace: UIButton!
-    
     @IBOutlet weak var cropButton: UIButton!
     
     static var filterName:String = "CISepiaTone"
@@ -30,11 +32,65 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var imagePick: UIButton!
   
-  static var xPoint:CGFloat = 0.0
-  static var yPoint:CGFloat = 0.0
-  static var rectWidth:CGFloat = 0.0
-  static var rectHeight:CGFloat = 0.0
+    static var xPoint:CGFloat = 0.0
+    static var yPoint:CGFloat = 0.0
+    static var rectWidth:CGFloat = 0.0
+    static var rectHeight:CGFloat = 0.0
+   
     
+    
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        //Get the current known point and redraw
+        if let touch = touches.first {
+            PhotoController.currentPoint = touch.location(in: imageView)
+            reDrawSelectionArea(fromPoint: PhotoController.lastPoint, toPoint: PhotoController.currentPoint)
+            
+        }
+    }
+    func reDrawSelectionArea(fromPoint: CGPoint, toPoint: CGPoint) {
+        overlay.isHidden = false
+        print((imageView.image?.size.width)!)
+        print(PhotoController.lastPoint.x)
+        print((imageView.image?.size.height)!)
+        print(PhotoController.currentPoint.y)
+        
+        
+        // imageView.bounds.size = (imageView.image?.size)!
+        
+        let imageRatio = (imageView.image?.size.width)! / (imageView.image?.size.height)!
+        print(imageRatio, "imageRatio")
+        let imageRatioInvert = (imageView.image?.size.height)! / (imageView.image?.size.width)!
+        
+        let widthFactor = ((imageView.image?.size.width)! / 375) * imageRatio
+        print(widthFactor, "width")
+        print(PhotoController.lastPoint.x)
+        print(PhotoController.xPoint)
+        let heigthFactor = ((imageView.image?.size.height)! / 332) * imageRatio
+        print(heigthFactor, "heigth")
+        print(PhotoController.currentPoint.y)
+        print(PhotoController.yPoint)
+        //Calculate rect from the original point and last known point
+        let rect = CGRect(x:min(fromPoint.x, toPoint.x),
+                          y:min(fromPoint.y, toPoint.y),
+                          width:fabs(fromPoint.x - toPoint.x),
+                          height:fabs(fromPoint.y - toPoint.y));
+        PhotoController.xPoint =  PhotoController.lastPoint.x //* imageRatio
+        PhotoController.yPoint =  PhotoController.currentPoint.y //* imageRatio
+        PhotoController.rectWidth = (PhotoController.currentPoint.x - PhotoController.lastPoint.x) //* widthFactor
+        PhotoController.rectHeight = (PhotoController.currentPoint.y - PhotoController.lastPoint.y)// * heigthFactor
+        
+        overlay.frame = rect
+        
+        
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        overlay.isHidden = false
+        
+        
+        overlay.frame = CGRect.zero //reset overlay for next tap
+    }
 
     
     @IBOutlet weak var pickerView: UIView!
@@ -77,15 +133,15 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
         scrollViewTwo.minimumZoomScale = 0.5
         scrollViewTwo.maximumZoomScale = 10.0
         scrollViewTwo.zoomScale = 1.0
-        scrollViewTwo.layer.borderWidth = 2
-        scrollViewTwo.layer.borderColor = UIColor.green.cgColor
-        scrollViewTwo.layer.cornerRadius = 10.5
+        imageView.layer.borderWidth = 2
+        imageView.layer.borderColor = UIColor.green.cgColor
+        imageView.layer.cornerRadius = 10.5
         scrollMaster.layer.borderWidth = 3
         scrollMaster.layer.borderColor = UIColor.white.cgColor
-        scrollMaster.layer.cornerRadius = 10.5
-        scrollView.layer.borderWidth = 2
-        scrollView.layer.borderColor = UIColor.yellow.cgColor
-        scrollView.layer.cornerRadius = 10.5
+        scrollMaster.layer.cornerRadius = 10
+        secondImage.layer.borderWidth = 2
+        secondImage.layer.borderColor = UIColor.black.cgColor
+        secondImage.layer.cornerRadius = 10
         imageView.addGestureRecognizer(pinchGesture2)
         imageView.addGestureRecognizer(rotationGesture2)
         imageView.addGestureRecognizer(gestureRecognizer2)
@@ -374,6 +430,9 @@ func gestureRecognizer3(_ gestureRecognizer: UIGestureRecognizer, shouldRecogniz
         }
         dismiss(animated: true, completion: nil)
     }
+    
+    
+    
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         picker.dismiss(animated: true, completion: nil)
     }

@@ -26,6 +26,7 @@
 		D326173120EFF0F400170D93 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D326173020EFF0F400170D93 /* FilterView.swift */; };
 		D365198120F244C600E64CD2 /* Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = D365198020F244C600E64CD2 /* Image.swift */; };
 		D3712DEC20EBC70800C07773 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3712DEB20EBC70700C07773 /* Assets.xcassets */; };
+		D3805FC520F814BF00D87AB7 /* functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3805FC420F814BF00D87AB7 /* functions.swift */; };
 		D3823A7B20EAE81100FB3CC2 /* PhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3823A7A20EAE81100FB3CC2 /* PhotoController.swift */; };
 		D3948E9920E6A53100994184 /* Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948E9820E6A53100994184 /* Login.swift */; };
 		D3948E9B20E6A55400994184 /* HDCameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948E9A20E6A55400994184 /* HDCameraViewController.swift */; };
@@ -42,6 +43,8 @@
 		D39CA87E20EA5FE1003D31E0 /* ExposureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39CA87D20EA5FE1003D31E0 /* ExposureView.swift */; };
 		D3C0F00220E7A75F00A0F57B /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C0F00120E7A75F00A0F57B /* SettingsController.swift */; };
 		D3DC9C3F20F4DA4000779542 /* DrawClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DC9C3E20F4DA4000779542 /* DrawClass.swift */; };
+		D3FEFFD720F8D5A9007ED64A /* PopUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FEFFD620F8D5A9007ED64A /* PopUp.swift */; };
+		D3FEFFD920F8EA3F007ED64A /* facebutton in Resources */ = {isa = PBXBuildFile; fileRef = D3FEFFD820F8EA3F007ED64A /* facebutton */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +73,7 @@
 		D326173020EFF0F400170D93 /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
 		D365198020F244C600E64CD2 /* Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Image.swift; sourceTree = "<group>"; };
 		D3712DEB20EBC70700C07773 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Assets.xcassets; path = "../../../Desktop/Software Development/Working Dual Layer 2/RtspClient/Assets.xcassets"; sourceTree = "<group>"; };
+		D3805FC420F814BF00D87AB7 /* functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = functions.swift; sourceTree = "<group>"; };
 		D3823A7A20EAE81100FB3CC2 /* PhotoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoController.swift; sourceTree = "<group>"; };
 		D3948E9820E6A53100994184 /* Login.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Login.swift; sourceTree = "<group>"; };
 		D3948E9A20E6A55400994184 /* HDCameraViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HDCameraViewController.swift; sourceTree = "<group>"; };
@@ -86,6 +90,8 @@
 		D39CA87D20EA5FE1003D31E0 /* ExposureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExposureView.swift; sourceTree = "<group>"; };
 		D3C0F00120E7A75F00A0F57B /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		D3DC9C3E20F4DA4000779542 /* DrawClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawClass.swift; sourceTree = "<group>"; };
+		D3FEFFD620F8D5A9007ED64A /* PopUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopUp.swift; sourceTree = "<group>"; };
+		D3FEFFD820F8EA3F007ED64A /* facebutton */ = {isa = PBXFileReference; lastKnownFileType = file; path = facebutton; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +118,7 @@
 		415C638E1CECC824005F81E4 = {
 			isa = PBXGroup;
 			children = (
+				D3FEFFD620F8D5A9007ED64A /* PopUp.swift */,
 				415C63E51CECD063005F81E4 /* libavcodec.a */,
 				415C63E61CECD063005F81E4 /* libavdevice.a */,
 				415C63E71CECD063005F81E4 /* libavfilter.a */,
@@ -141,8 +148,10 @@
 				D3948E9720E6A4EF00994184 /* View Controllers */,
 				D3948E9520E6A4D000994184 /* Classes */,
 				415C639A1CECC824005F81E4 /* AppDelegate.swift */,
+				D3FEFFD820F8EA3F007ED64A /* facebutton */,
 				D3712DEB20EBC70700C07773 /* Assets.xcassets */,
 				415C639E1CECC824005F81E4 /* Main.storyboard */,
+				D3805FC420F814BF00D87AB7 /* functions.swift */,
 				D3DC9C3E20F4DA4000779542 /* DrawClass.swift */,
 				D3948E9E20E6A7AC00994184 /* Inceptionv3.mlmodel */,
 				415C63A31CECC824005F81E4 /* LaunchScreen.storyboard */,
@@ -251,6 +260,7 @@
 				415C63A51CECC824005F81E4 /* LaunchScreen.storyboard in Resources */,
 				D3712DEC20EBC70800C07773 /* Assets.xcassets in Resources */,
 				415C63A01CECC824005F81E4 /* Main.storyboard in Resources */,
+				D3FEFFD920F8EA3F007ED64A /* facebutton in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,7 +281,9 @@
 				D3DC9C3F20F4DA4000779542 /* DrawClass.swift in Sources */,
 				D3948EA920E6A80700994184 /* UIViewController+Alert.swift in Sources */,
 				D326173120EFF0F400170D93 /* FilterView.swift in Sources */,
+				D3FEFFD720F8D5A9007ED64A /* PopUp.swift in Sources */,
 				D365198120F244C600E64CD2 /* Image.swift in Sources */,
+				D3805FC520F814BF00D87AB7 /* functions.swift in Sources */,
 				D3948E9920E6A53100994184 /* Login.swift in Sources */,
 				D3948EA120E6A7CA00994184 /* ControllerClass.swift in Sources */,
 				D3948EA520E6A7EF00994184 /* UIImage+CVPixelBuffer.swift in Sources */,
@@ -425,7 +437,7 @@
 				DEVELOPMENT_TEAM = 6XU436FT9J;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/FFMpegiOS/include/**";
 				INFOPLIST_FILE = RtspClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -436,6 +448,7 @@
 				SWIFT_OBJC_BRIDGING_HEADER = "RtspClient/RtspClient-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Debug;
 		};
@@ -448,7 +461,7 @@
 				DEVELOPMENT_TEAM = 6XU436FT9J;
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/FFMpegiOS/include/**";
 				INFOPLIST_FILE = RtspClient/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -458,6 +471,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "RtspClient/RtspClient-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = 2;
 			};
 			name = Release;
 		};

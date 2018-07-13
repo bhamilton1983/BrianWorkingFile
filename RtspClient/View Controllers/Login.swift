@@ -13,16 +13,18 @@ class Login: UIViewController,UIScrollViewDelegate, UIGestureRecognizerDelegate 
   
     @IBOutlet var loginScreenMainView: UIView!
     @IBOutlet weak var loginScroll: UIScrollView!
-    static var username:String = ""
-    static var password:String = ""
-    static var ip:String = ""
-    static var video:String = ""
-    static var media:String = ""
-    static var rtsp:String = ""
+    static var username:String = "admin"
+    static var password:String = "admin"
+    static var ip:String = "192.168.1.116"
+    static var video:String = "videoinput_1"
+    static var media:String = "h264_1"
+    static var rtsp:String = "rtsp://192.168.1.116/videoinput_1/h264_1/media.stm"
     static var controller:String = ""
     var streamToggle1 = 1
     var identity = CGAffineTransform.identity
  //  var user = UserProfile(userName: String(username), passWord: String(password), address: String(ip), input: String (videoinput), stream: String(media), RTSPSTREAM: String(rtsp))?
+// Login.rtsp =  "rtsp://\(Login.username):\(Login.password)@\(Login.ip)/\(Login.video)/\(Login.media)/media.stm"
+    
     
     @IBOutlet weak var userText: UITextField!
     
