@@ -15,8 +15,12 @@ import ReplayKit
 import QuartzCore
 
 class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate, UIGestureRecognizerDelegate,UIScrollViewDelegate {
-  
+   
     
+    
+    
+    
+    @IBOutlet weak var stopButton: UIButton!
     @IBOutlet var touch: UIView!
     let overlay = UIView()
     @IBOutlet weak var cameraScroll: UIScrollView!
@@ -33,7 +37,7 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
    
    
     @IBOutlet var HDimageView: UIImageView!
-    var video: RTSPPlayer!
+    var video: RTSPPlayer?
     static var timer = Timer()
     @IBOutlet weak var playPause: UIButton!
     static var playRate:Double = 0.0
@@ -43,30 +47,13 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
     @IBOutlet weak var zoomControlContainer: UIView!
     @IBOutlet weak var sideControlContainer: UIView!
     @IBAction func playAction(_ sender: Any) {
-        
-        let normalImage = UIImage(named: "play_active_48.png")
-        let selectedImage = UIImage(named: "pause_active_48.png")
-
-        if toggleState == 1 {
-            starttime ()
-            playPause.isSelected = true
-            playPause.isHighlighted = true
-            playPause.setImage(normalImage, for: UIControl.State.normal)
-            toggleState = 2
-        }
-            else {
-            
-            if toggleState == 2 {
-                    stoptime()
-                    playPause.isSelected = false
-                    playPause.isHighlighted = false
-                    playPause.setImage(selectedImage, for: UIControl.State.selected)
-                    toggleState = 1
-                
-            }
-            
-        }
+    
+            starttime()
     }
+        @IBAction func stopAction(_ sender: Any) {
+        stoptime()
+    }
+    
    static var xPoint:CGFloat = 0.0
    static var yPoint:CGFloat = 0.0
    static var rectWidth:CGFloat = 0.0
@@ -144,7 +131,7 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
     @IBOutlet weak var classificationButton: UIButton!
     @IBAction func classificationActionButton(_ sender: Any) {
         
-        classificationProcess(video.currentImage)
+        classificationProcess((video?.currentImage)!)
         
     }
     @IBAction func faceAction(_ sender: Any) {
@@ -225,15 +212,12 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
         alert.addAction(action)
         self.present(alert, animated: true, completion: nil)
     }
-    
 
     @objc func rotate(_ gesture: UIRotationGestureRecognizer) {
         cameraScroll.transform = cameraScroll.transform.rotated(by: gesture.rotation)
 
     }
 
-        
-    
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return cameraScroll
     }
@@ -267,10 +251,11 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
     }
 
         func starttime () {
+           
             video = RTSPPlayer(video: "\(Login.rtsp)", usesTcp: false)
-            video.outputWidth = Int32(UIScreen.main.bounds.height)
-            video.outputHeight = Int32(UIScreen.main.bounds.width)
-            video.seekTime(0.0)
+            video?.outputWidth = Int32(UIScreen.main.bounds.height)
+            video?.outputHeight = Int32(UIScreen.main.bounds.width)
+            video?.seekTime(0.0)
             HDCameraViewController.timer = Timer.scheduledTimer(timeInterval: HDCameraViewController.playRate, target: self, selector: #selector( HDCameraViewController.update), userInfo: nil, repeats: true)
                 HDCameraViewController.timer.fire()
         }
@@ -282,13 +267,15 @@ class HDCameraViewController: UIViewController, RPPreviewViewControllerDelegate,
 
 
     @objc func update(timer: Timer) {
-        if(!video.stepFrame()){
-            timer.invalidate()
-            video.closeAudio()
+     
+        do {
+            
+            try self.video?.stepFrame()
+            self.HDimageView.image = self.video?.currentImage
+        } catch {
+            
+            HDCameraViewController.timer.invalidate()
         }
-     
-        HDimageView.image = video.currentImage
-     
     
     }
 

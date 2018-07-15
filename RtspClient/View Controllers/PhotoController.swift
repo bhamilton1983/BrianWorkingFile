@@ -9,6 +9,7 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
   
     
     
+    @IBOutlet weak var classificationLabel: UILabel!
     
     static var rectMade:CGRect = CGRect(x:PhotoController.xPoint, y: PhotoController.yPoint, width: PhotoController.rectWidth, height: PhotoController.rectHeight)
     @IBOutlet weak var scrollMaster: UIScrollView!
@@ -37,7 +38,12 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
     static var rectWidth:CGFloat = 0.0
     static var rectHeight:CGFloat = 0.0
    
+    @IBOutlet weak var classifyButton: UIButton!
     
+
+    @IBAction func classify(_ sender: Any) {
+        classificationProcess(imageView.image!)
+    }
     
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -50,41 +56,16 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
     }
     func reDrawSelectionArea(fromPoint: CGPoint, toPoint: CGPoint) {
         overlay.isHidden = false
-        print((imageView.image?.size.width)!)
-        print(PhotoController.lastPoint.x)
-        print((imageView.image?.size.height)!)
-        print(PhotoController.currentPoint.y)
-        
-        
-        // imageView.bounds.size = (imageView.image?.size)!
-        
-        let imageRatio = (imageView.image?.size.width)! / (imageView.image?.size.height)!
-        print(imageRatio, "imageRatio")
-        let imageRatioInvert = (imageView.image?.size.height)! / (imageView.image?.size.width)!
-        
-        let widthFactor = ((imageView.image?.size.width)! / 375) * imageRatio
-        print(widthFactor, "width")
-        print(PhotoController.lastPoint.x)
-        print(PhotoController.xPoint)
-        let heigthFactor = ((imageView.image?.size.height)! / 332) * imageRatio
-        print(heigthFactor, "heigth")
-        print(PhotoController.currentPoint.y)
-        print(PhotoController.yPoint)
-        //Calculate rect from the original point and last known point
         let rect = CGRect(x:min(fromPoint.x, toPoint.x),
                           y:min(fromPoint.y, toPoint.y),
                           width:fabs(fromPoint.x - toPoint.x),
                           height:fabs(fromPoint.y - toPoint.y));
-        PhotoController.xPoint =  PhotoController.lastPoint.x //* imageRatio
-        PhotoController.yPoint =  PhotoController.currentPoint.y //* imageRatio
-        PhotoController.rectWidth = (PhotoController.currentPoint.x - PhotoController.lastPoint.x) //* widthFactor
-        PhotoController.rectHeight = (PhotoController.currentPoint.y - PhotoController.lastPoint.y)// * heigthFactor
-        
+        PhotoController.xPoint =  PhotoController.lastPoint.x
+        PhotoController.yPoint =  PhotoController.currentPoint.y
+        PhotoController.rectWidth = (PhotoController.currentPoint.x - PhotoController.lastPoint.x)
+        PhotoController.rectHeight = (PhotoController.currentPoint.y - PhotoController.lastPoint.y)
         overlay.frame = rect
-        
-        
     }
-    
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         overlay.isHidden = false
         
@@ -92,7 +73,6 @@ class PhotoController: UIViewController, UIImagePickerControllerDelegate, UINavi
         overlay.frame = CGRect.zero //reset overlay for next tap
     }
 
-    
     @IBOutlet weak var pickerView: UIView!
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -430,7 +410,28 @@ func gestureRecognizer3(_ gestureRecognizer: UIGestureRecognizer, shouldRecogniz
         }
         dismiss(animated: true, completion: nil)
     }
+  
     
+    func classificationProcess(_ image: UIImage) {
+        
+        imageView.image = image
+        guard let pixelBuffer = image.pixelBuffer(width: 299, height: 299) else {
+            return
+        }
+        //I have `Use of unresolved identifier 'Inceptionv3'` error here when I use New Build System (File > Project Settings)   ¯\_(ツ)_/¯
+        let model = Inceptionv3()
+        do {
+            let output = try model.prediction(image: pixelBuffer)
+            let probs = output.classLabelProbs.sorted { $0.value > $1.value }
+            if let prob = probs.first {
+                classificationLabel.text = "\(prob.key) \(prob.value)"
+            }
+        }
+        catch {
+            self.presentAlertController(withTitle: title,
+                                        message: error.localizedDescription)
+        }
+    }
     
     
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
